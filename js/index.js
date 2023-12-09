@@ -2,9 +2,9 @@
 const board = document.getElementById('game-board');
 const instructionText = document.querySelector('#instruction-text');
 const logo = document.querySelector('#logo');
+
 const score = document.getElementById('score');
 const highScoreText = document.getElementById('highScore');
-console.log('hamed', score);
 
 // Define game variables
 const gridSize = 20;
@@ -161,8 +161,8 @@ function checkCollision() {
 }
 
 function resetGame() {
-  // updateHighScore();
-  // stopGame();
+  updateHighScore();
+  stopGame();
   snake = [{ x: 10, y: 10 }];
   food = generateFoodPositon();
   direction = 'right';
@@ -172,6 +172,26 @@ function resetGame() {
 
 function updateScore() {
   const currentScore = snake.length - 1;
-  console.log('sad', currentScore.toString().padStart(3, '0'));
   score.textContent = currentScore.toString().padStart(3, '0');
+}
+
+function stopGame() {
+  clearInterval(gameInterval);
+  gameStarted = false;
+  const snakeCube = document.querySelector('.snake');
+  const foodCube = document.querySelector('.food');
+
+  instructionText.style.display = 'block';
+  logo.style.display = 'block';
+  snakeCube.style.display = 'none';
+  foodCube.style.display = 'none';
+}
+
+function updateHighScore() {
+  const currentScore = snake.length - 1;
+  if (currentScore > highScore) {
+    highScore = currentScore;
+    highScoreText.textContent = highScore.toString().padStart(3, '0');
+  }
+  highScoreText.style.display = 'block';
 }
