@@ -2,6 +2,7 @@
 const board = document.getElementById('game-board');
 const instructionText = document.querySelector('#instruction-text');
 const logo = document.querySelector('#logo');
+const caption = document.querySelector('.caption');
 
 const score = document.getElementById('score');
 const highScoreText = document.getElementById('highScore');
@@ -36,6 +37,7 @@ function drawSnake() {
 function createGameElement(tag, className) {
   const element = document.createElement(tag);
   element.className = className;
+  element.id = className;
   return element;
 }
 
@@ -96,8 +98,7 @@ function move() {
 
 function startGame() {
   gameStarted = true;
-  instructionText.style.display = 'none';
-  logo.style.display = 'none';
+  caption.style.display = 'none';
   gameInterval = setInterval(() => {
     move();
     checkCollision();
@@ -178,11 +179,13 @@ function updateScore() {
 function stopGame() {
   clearInterval(gameInterval);
   gameStarted = false;
-  const snakeCube = document.querySelector('.snake');
-  const foodCube = document.querySelector('.food');
-
+  const snakeCube = document.getElementById('snake');
+  const foodCube = document.getElementById('food');
+  console.log(snakeCube);
   instructionText.style.display = 'block';
-  logo.style.display = 'block';
+  caption.style.display = 'flex';
+  snakeCube.classList.add('hidden');
+  foodCube.classList.add('hidden');
   snakeCube.style.display = 'none';
   foodCube.style.display = 'none';
 }
